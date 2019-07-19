@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+</head>
+<body>
+    <!-- Header display name game -->
+    <div class="header">
+        <div class="container">
+            <h1>Marvel</h1>
+            <h2>Word Guess</h2>
+        </div>
+    </div>
+    
+    <!-- main game info -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <p id="instructions-text">Press the button to start game!</p>
+                <button onclick="startGame()">Start Game</button>
+            </div>
+        </div>
+        <!-- <div class="row"> row has Wins, Letters Guessed & Guesses remaining -->
+        <div class="row">
+            <div class="col-sm-4">
+                <p id="wins-text">Wins:</p>
+            </div>
+            <div class="col-sm-4">
+                <p id="guesses-text">Letters Guessed: </p>
+            </div>
+            <div class="col-sm-4">
+                <p id="guesses-remaining-text">Guesses Remaining: </p>
+            </div>
+        </div>
+        <!-- word place holder -->
+        <div class="row">
+            <div class="col-sm">
+                <p id="placeHolder-text"></p>
+            </div>
+        </div>
+    </div>
+    
+
+<Script type="text/javascript">
+
+    var instructionsText = document.getElementById("instructions-text");
+    var winsText = document.getElementById("wins-text");
+    var lettersGuessedText = document.getElementById("guesses-text");
+    var guessesRemainingText = document.getElementById("guesses-remaining-text");
+    var wordPlaceHolderText = document.getElementById("placeHolder-text");
+
+    var wins = 0;
+    var guesses = ""; 
+    var wordList = ["Thor", "Hulk", "Iron Man", "Spider Man", "Captain Marvel", "Thanos", "Captain America", "Black Widow", "Black Panther", "Hawkeye", "Ant Man", "Vision", "Groot", "Falcon", "Scarlet Witch", "Gamora", "Star-Lord", "Winter Soldier", "Doctor Strange", "Drax", "Mantis", "Rocket", "War Machine", "Nebula", "Loki", "Nick Fury", "Hela", "Odin", "Yondu", "Wasp"];
+
+    
+    // wordPlaceHolderText.textContent = wordList[0];
+
+    function startGame() {
+        var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+            var underscore = [""];
+            for (var i = 0; i < randomWord.length; i++) {
+                underscore += "_ ";
+            }
+            document.getElementById("placeHolder-text").textContent = underscore;
+            instructionsText.textContent = "Select a letter";
+        
+    }
+    
+
+    document.onkeyup = function (event) {
+            var userGuess = event.key;
+
+            
+
+            // if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+
+            //     if ((userGuess === "r" && computerGuess === "s") ||
+            //         (userGuess === "p" && computerGuess === "r") ||
+            //         (userGuess === "s" && computerGuess === "p")) {
+            //         wins++;
+            //         instructionsText.textContent = "You Win!";
+            //     }
+            //     else if (userGuess === computerGuess) {
+            //         tie++;
+            //         instructionsText.textContent = "Tie Game";
+            //     }
+            //     else {
+            //         losses++;
+            //         instructionsText.textContent = "You Lose!";
+            //     }
+
+
+
+
+                
+    }                
+
+        
+
+    // document.onkeyup = function (event){
+    //     var userGuess = event.key;
+    //     var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+        
+    //     wordPlaceHolderText.textContent = "The random word is: " = randomWord;
+        
+    // };  
+
+
+
+
+    
+</Script>
+
+    <script src="assets/javascript/game.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+.header {
+    background-color: red;
+}
+
+h1  {
+    color: white;
+    font-size: 100px;
+    margin: auto;
+    border: solid 2px white;
+}
+
+h2  {
+    color: gold;
+}
