@@ -12,19 +12,23 @@
 </head>
 <body>
     <!-- Header display name game -->
-    <div class="header">
-        <div class="container">
-            <h1>Marvel</h1>
-            <h2>Word Guess</h2>
+    <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-danger justify-content-center">
+        <div class="nav-container">
+            <div class="row">
+            <h1>Marvel Character</h1>
+            </div>
+            <div class="row justify-content-center">
+            <h2>Word Guess Game</h2>
+            </div>
         </div>
-    </div>
+    </nav>
     
     <!-- main game info -->
-    <div class="container">
-        <div class="row">
+    <div class="container mt-1">
+        <!-- Instructions -->
+        <div class="row justify-content-center">
             <div class="col-sm">
-                <p id="instructions-text">Press the button to start game!</p>
-                <button onclick="startGame()">Start Game</button>
+                <p id="instructions-text">Press any key to start the game!</p>
             </div>
         </div>
         <!-- <div class="row"> row has Wins, Letters Guessed & Guesses remaining -->
@@ -48,76 +52,68 @@
     </div>
     
 
-<Script type="text/javascript">
+<!-- <Script type="text/javascript">
 
+    // portal variables to html
     var instructionsText = document.getElementById("instructions-text");
     var winsText = document.getElementById("wins-text");
     var lettersGuessedText = document.getElementById("guesses-text");
     var guessesRemainingText = document.getElementById("guesses-remaining-text");
     var wordPlaceHolderText = document.getElementById("placeHolder-text");
 
+    // game variables
+    var isPlaying = false;
     var wins = 0;
-    var guesses = ""; 
-    var wordList = ["Thor", "Hulk", "Iron Man", "Spider Man", "Captain Marvel", "Thanos", "Captain America", "Black Widow", "Black Panther", "Hawkeye", "Ant Man", "Vision", "Groot", "Falcon", "Scarlet Witch", "Gamora", "Star-Lord", "Winter Soldier", "Doctor Strange", "Drax", "Mantis", "Rocket", "War Machine", "Nebula", "Loki", "Nick Fury", "Hela", "Odin", "Yondu", "Wasp"];
+    var lettersGuessed = [];
+    var guessesRemaining = 10; 
+    var wordList = ["bear"]; //["Thor", "Hulk", "Iron Man", "Spider Man", "Captain Marvel", "Thanos", "Captain America", "Black Widow", "Black Panther", "Hawkeye", "Ant Man", "Vision", "Groot", "Falcon", "Scarlet Witch", "Gamora", "Star-Lord", "Winter Soldier", "Doctor Strange", "Drax", "Mantis", "Rocket", "War Machine", "Nebula", "Loki", "Nick Fury", "Hela", "Odin", "Yondu", "Wasp"];
+    var randomWord;
 
-    
-    // wordPlaceHolderText.textContent = wordList[0];
-
-    function startGame() {
-        var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-            var underscore = [""];
-            for (var i = 0; i < randomWord.length; i++) {
-                underscore += "_ ";
-            }
-            document.getElementById("placeHolder-text").textContent = underscore;
-            instructionsText.textContent = "Select a letter";
-        
-    }
-    
-
+    // on first key press, starts game, generates random word & matching underscore placeholder for letters, sets Guesses Remaining = 10, Wins = 0
     document.onkeyup = function (event) {
-            var userGuess = event.key;
+        var userGuess = event.key;
+        if(isPlaying === false){
+            var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
+            var underscore = [];
 
-            
+            for (var i = 0; i < randomWord.length; i++) {
+                underscore += "_ "; 
+            }
+            wordPlaceHolderText.textContent = underscore;
+            instructionsText.textContent = "Select a letter";
+            guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+            winsText.textContent = "Wins: " + wins; 
+            isPlaying = true; 
 
-            // if ((userGuess === "r") || (userGuess === "p") || (userGuess === "s")) {
+            // on key press checks to see if keystroke is a letter in the randomWord" 
+            if(isPlaying === true){
+                document.onkeyup = function (event) {
+                    var userGuess = event.key;
+                    console.log(userGuess);
 
-            //     if ((userGuess === "r" && computerGuess === "s") ||
-            //         (userGuess === "p" && computerGuess === "r") ||
-            //         (userGuess === "s" && computerGuess === "p")) {
-            //         wins++;
-            //         instructionsText.textContent = "You Win!";
-            //     }
-            //     else if (userGuess === computerGuess) {
-            //         tie++;
-            //         instructionsText.textContent = "Tie Game";
-            //     }
-            //     else {
-            //         losses++;
-            //         instructionsText.textContent = "You Lose!";
-            //     }
+                    if(randomWord.indexOf(userGuess) > -1) {
+                        for (var i = 0; i < randomWord.length; i++) {
+                            if (userGuess === randomWord[i]) {
+                                underscore[i] = userGuess;
+                            }
+                        }
+                    }
+                    else{
+                        // adds letter to guessed letter field
+                        lettersGuessed.push(userGuess);
+                        lettersGuessedText.textContent = "Letters Guessed: " + lettersGuessed;
+                        guessesRemaining--;
+                        guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
 
+                    }
 
-
-
-                
-    }                
-
-        
-
-    // document.onkeyup = function (event){
-    //     var userGuess = event.key;
-    //     var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-        
-    //     wordPlaceHolderText.textContent = "The random word is: " = randomWord;
-        
-    // };  
-
-
-
-
+                }
+            }    
+        }
+    }   
     
-</Script>
+    
+</Script> -->
 
     <script src="assets/javascript/game.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -1,14 +1,33 @@
-.header {
-    background-color: red;
+
+.mt-1 {
+  margin-top: 200px !important;
 }
 
 h1  {
     color: white;
     font-size: 100px;
     margin: auto;
-    border: solid 2px white;
+    text-align: center;
 }
 
 h2  {
-    color: gold;
+    color: white;
+    text-align: center;
 }
+
+body    {
+    background-color: rgb(70, 66, 66);
+    padding-top: auto;
+}
+
+p   {
+    color: white;
+    font-size: 20px;
+}
+
+#placeHolder-text   {
+    color: white;
+    font-size: 30px;
+}
+
+
