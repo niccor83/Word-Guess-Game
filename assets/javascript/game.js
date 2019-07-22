@@ -15,44 +15,33 @@ var randomWord;
 var correctLtr = 0;
 var incorrectLtr = 0;
 
+
 //--------------first key press starts game---------------------
- //generates random word, sets Guesses Remaining = 10, Wins = 0
+ //generates random word, sets Guesses Remaining = 10, Wins = to number of wins
  
     document.onkeyup = function (event) { 
         var userGuess = event.key;  
-        if (isPlaying === false) { // isPlaying is set to false so that the setup code will run on the first key press but not affect the counters.
-            var randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //generates random word from wordlist and stores in randomWord variable
-            var underscore = []; //underscore array declaration
+            if (isPlaying === false) { // isPlaying is set to false so that the setup code will run on the first key press but not affect the counters.
+                var randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //generates random word from wordlist and stores in randomWord variable
+                var underscore = []; //underscore array declaration
 
-            //loops through random word 
-            for (var i = 0; i < randomWord.length; i++) {
-                underscore.push("_");  
-                if(randomWord[i] === " "){
-                    underscore[i] = "-";
-                    correctLtr = 1;
-                    console.log("correct letters = " + correctLtr);
+                //underscore = placeholder where correct letters will be displayed, correctLtr is counter for correct letters pressed
+                for (var i = 0; i < randomWord.length; i++) {
+                    underscore.push("_");
+                    if (randomWord[i] === " ") {
+                        underscore[i] = "-";
+                        correctLtr = 1;
+                        console.log("correct letters = " + correctLtr);
+                    }
                 }
+
+                wordPlaceHolderText.textContent = underscore.join(" "); //removes commas in underscore array and replaces them with spaces
+                instructionsText.textContent = "Select a letter";
+                guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+                winsText.textContent = "Wins: " + wins;
+                isPlaying = true; //sets isPlaying to true so on next key press it will by pass setup code and mov on to playing game.
             }
-
-            wordPlaceHolderText.textContent = underscore.join(" ");
-            instructionsText.textContent = "Select a letter";
-            guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
-            winsText.textContent = "Wins: " + wins;
-            isPlaying = true;
-
-            // function winLose(){
-            //     if (correctLtr === randomWord.length){
-            //         wins++;
-            //         winsText.textContent = wins;
-            //         instructionsText.textContent = "You win!";
-            //     }
-            //     else if( guessesRemaining === 0){
-            //         isPlaying = false;
-            //         instructionsText.textContent = "You Lose! Press any key to start a new game."
-
-            //     }
-
-            // }
+            
             //--------------Second Key Press-------------------
             //checks to see if keystroke is a letter in the randomWord" 
             if (isPlaying === true) {
@@ -88,9 +77,12 @@ var incorrectLtr = 0;
                         lettersGuessedText.textContent = "Letters Guessed: " + lettersGuessed;
                         guessesRemaining--;
                         guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+                        if(guessesRemaining === 0){
+                            instructionsText.textContent = "You Lose! Press any key to start a new game.";
+                        }
                     }
 
                 }
             }
-        }
+        
     }
