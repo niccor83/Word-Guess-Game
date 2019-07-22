@@ -10,48 +10,87 @@ var isPlaying = false;
 var wins = 0;
 var lettersGuessed = [];
 var guessesRemaining = 10;
-var wordList = ["bear"]; //["Thor", "Hulk", "Iron Man", "Spider Man", "Captain Marvel", "Thanos", "Captain America", "Black Widow", "Black Panther", "Hawkeye", "Ant Man", "Vision", "Groot", "Falcon", "Scarlet Witch", "Gamora", "Star-Lord", "Winter Soldier", "Doctor Strange", "Drax", "Mantis", "Rocket", "War Machine", "Nebula", "Loki", "Nick Fury", "Hela", "Odin", "Yondu", "Wasp"];
+var wordList = ["thor", "hulk", "iron man", "spider man", "captain marvel", "thanos", "captain america", "black widow", "black panther", "hawkeye", "ant man", "vision", "groot", "falcon", "scarlet witch", "gamora", "star lord", "winter soldier", "doctor strange", "drax", "mantis", "rocket", "war machine", "nebula", "loki", "nick fury", "hela", "odin", "yondu", "wasp"];
 var randomWord;
+var correctLtr = 0;
+var incorrectLtr = 0;
 
-// on first key press, starts game, generates random word & matching underscore placeholder for letters, sets Guesses Remaining = 10, Wins = 0
-document.onkeyup = function (event) {
-    var userGuess = event.key;
-    if (isPlaying === false) {
-        var randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-        var underscore = [];
+//--------------first key press starts game---------------------
+ //generates random word, sets Guesses Remaining = 10, Wins = 0
+ 
+    document.onkeyup = function (event) { 
+        var userGuess = event.key;  
+        if (isPlaying === false) { // isPlaying is set to false so that the setup code will run on the first key press but not affect the counters.
+            var randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //generates random word from wordlist and stores in randomWord variable
+            var underscore = []; //underscore array declaration
 
-        for (var i = 0; i < randomWord.length; i++) {
-            underscore += "_ ";
-        }
-        wordPlaceHolderText.textContent = underscore;
-        instructionsText.textContent = "Select a letter";
-        guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
-        winsText.textContent = "Wins: " + wins;
-        isPlaying = true;
+            //loops through random word 
+            for (var i = 0; i < randomWord.length; i++) {
+                underscore.push("_");  
+                if(randomWord[i] === " "){
+                    underscore[i] = "-";
+                    correctLtr = 1;
+                    console.log("correct letters = " + correctLtr);
+                }
+            }
 
-        // on key press checks to see if keystroke is a letter in the randomWord" 
-        if (isPlaying === true) {
-            document.onkeyup = function (event) {
-                var userGuess = event.key;
-                console.log(userGuess);
+            wordPlaceHolderText.textContent = underscore.join(" ");
+            instructionsText.textContent = "Select a letter";
+            guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+            winsText.textContent = "Wins: " + wins;
+            isPlaying = true;
 
-                if (randomWord.indexOf(userGuess) > -1) {
-                    for (var i = 0; i < randomWord.length; i++) {
-                        if (userGuess === randomWord[i]) {
-                            underscore[i] = userGuess;
+            // function winLose(){
+            //     if (correctLtr === randomWord.length){
+            //         wins++;
+            //         winsText.textContent = wins;
+            //         instructionsText.textContent = "You win!";
+            //     }
+            //     else if( guessesRemaining === 0){
+            //         isPlaying = false;
+            //         instructionsText.textContent = "You Lose! Press any key to start a new game."
+
+            //     }
+
+            // }
+            //--------------Second Key Press-------------------
+            //checks to see if keystroke is a letter in the randomWord" 
+            if (isPlaying === true) {
+
+                document.onkeyup = function (event) {
+                    var userGuess = event.key; 
+                    
+                    //checks to see if letter is in the randomWord & not in underscore
+                    if (randomWord.indexOf(userGuess) > -1 && underscore.indexOf(userGuess) === -1) {
+                        for (var i = 0; i < randomWord.length; i++) {
+                            if (userGuess === randomWord[i]) {
+                                underscore[i] = userGuess;
+                                wordPlaceHolderText.textContent = underscore.join(" ");
+                                correctLtr++;
+                                console.log("correct letters = " + correctLtr); //test correctLtr is incrementing correctly
+                                if (correctLtr === randomWord.length) {
+                                    wins++;
+                                    winsText.textContent = "Wins: " + wins;
+                                    instructionsText.textContent = "You win!";
+                                }
+                                
+                            }
                         }
                     }
-                }
-                else {
-                    // adds letter to guessed letter field
-                    lettersGuessed.push(userGuess);
-                    lettersGuessedText.textContent = "Letters Guessed: " + lettersGuessed;
-                    guessesRemaining--;
-                    guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+                    //This prevents correctLtr from incrementing if user presses a correct key more than once
+                    else if (randomWord.indexOf(userGuess) > -1 && underscore.indexOf(userGuess) > -1){
+                        instructionsText.textContent = "You have already selected: " + userGuess + " Pick another letter!";
+                    }
+                    //if letter not found in randomWord run following code
+                    else {
+                        // adds letter to guessed letter field
+                        lettersGuessed.push(userGuess);
+                        lettersGuessedText.textContent = "Letters Guessed: " + lettersGuessed;
+                        guessesRemaining--;
+                        guessesRemainingText.textContent = "Guesses Remaining: " + guessesRemaining;
+                    }
 
                 }
-
             }
         }
     }
-}
